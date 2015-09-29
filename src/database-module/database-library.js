@@ -1,8 +1,40 @@
 import Q from 'q';
+import r from 'rethinkdb';
 
 class databaseLibrary {
+    constructor(config) {
+        this.connection = null;
+        this.config = config;
+    }
+
+    _getConnection() {
+        return Q.Promise((resolve, reject) => {
+            if (this.connection) return resolve(this.connection);
+
+            r.connect(this.config, (err, conn) => {
+                if (err) return reject(err);
+                this.connection = conn;
+                resolve(this.connection);
+            });
+        });
+    }
+
     createEntry(payload) {
-        return Q();
+        const defer = Q.defer();
+
+        this._getConnection()
+            .then((conn) => {
+                r.db('microstar').table('events')
+                    .insert([
+                        payload
+                    ])
+                    .run(conn, (err, result) => {
+                        if (err) return defer.reject(err);
+                        defer.resolve(result);
+                    });
+            });
+
+        return defer.promise;
     }
 }
 

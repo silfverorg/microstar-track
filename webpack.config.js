@@ -6,6 +6,7 @@ module.exports = {
     library: 'microstar-track',
     libraryTarget: 'commonjs2'
   },
+  target: "node",
   module: {
     loaders: [
       {

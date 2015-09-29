@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "q": "^1.4.1",
-    "ramda": "^0.17.1"
+    "ramda": "^0.17.1",
+    "rethinkdb": "^2.1.1"
   },
   "devDependencies": {
     "babel": "^5.8.23",

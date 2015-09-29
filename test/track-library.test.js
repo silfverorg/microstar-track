@@ -1,5 +1,11 @@
-import microstarTrack from '../index.js';
+import MicrostarTrack from '../index.js';
 import should from 'should';
+
+const config = {
+  host: 'localhost',
+  port: 32775,
+};
+const microstarTrack = new MicrostarTrack(config)
 
 describe('Track library Suite', () => {
 

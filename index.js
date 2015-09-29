@@ -93,23 +93,26 @@ module.exports =
 	    port: 32775
 	};
 
-	var databaseModule = new _databaseModuleDatabaseLibrary2['default'](config);
-
 	var TrackLibrary = (function () {
-	    function TrackLibrary() {
+	    function TrackLibrary(config) {
 	        _classCallCheck(this, TrackLibrary);
+
+	        this.config = config;
+	        this.database = new _databaseModuleDatabaseLibrary2['default'](config);
 	    }
 
 	    _createClass(TrackLibrary, [{
 	        key: 'track',
 	        value: function track(event, data) {
+	            var _this = this;
+
 	            return _q2['default'].Promise(function (resolve, reject) {
 	                if (!event) {
 	                    resolve({
 	                        status: 400
 	                    });
 	                } else {
-	                    databaseModule.createEntry({
+	                    _this.database.createEntry({
 	                        event: event,
 	                        data: data
 	                    }).then(function (res) {
@@ -130,7 +133,7 @@ module.exports =
 	    return TrackLibrary;
 	})();
 
-	exports['default'] = new TrackLibrary();
+	exports['default'] = TrackLibrary;
 	module.exports = exports['default'];
 
 /***/ },

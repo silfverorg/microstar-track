@@ -7,9 +7,12 @@ const config = {
     port: 32775,
 };
 
-const databaseModule = new DatabaseModule(config);
-
 class TrackLibrary {
+    constructor(config) {
+      this.config = config;
+      this.database = new DatabaseModule(config);
+    }
+
     track(event, data) {
         return Q.Promise((resolve, reject) => {
             if (!event) {
@@ -17,7 +20,7 @@ class TrackLibrary {
                     status: 400,
                 })
             } else {
-                databaseModule.createEntry({
+                this.database.createEntry({
                     event,
                     data
                 })
@@ -37,4 +40,4 @@ class TrackLibrary {
     }
 }
 
-export default new TrackLibrary();
+export default TrackLibrary;

@@ -1,4 +1,4 @@
-import microstarTrack from 'track-module';
+import microstarTrack from '../index.js';
 import should from 'should';
 
 describe('Track library Suite', () => {

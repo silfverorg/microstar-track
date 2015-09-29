@@ -1,4 +1,6 @@
 node_modules
 .npm
 lib
-.tern-port
+*.tern-port
+*.swp
+./index.js

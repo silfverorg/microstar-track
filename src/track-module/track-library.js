@@ -1,6 +1,6 @@
 import R from 'ramda';
 import Q from 'q';
-import databaseModule from 'database-module';
+import databaseModule from '../database-module/database-library';
 
 
 class TrackLibrary {

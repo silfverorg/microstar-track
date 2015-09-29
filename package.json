@@ -5,22 +5,20 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "npm run build",
-    "build": "rm -rf lib && babel src --out-dir lib",
-    "setup": "find src/ -maxdepth 1 | tail -n +2 | npm link",
-
+    "build": "webpack",
     "test": "mocha --compilers js:babel/register",
-    "testwatch": "mocha --compilers js:babel/register --watch"
+    "testwatch": "npm run test -- --watch"
   },
   "author": "Viktor Silfverström",
   "license": "MIT",
   "dependencies": {
-    "database-module": "file:lib/database-module",
     "q": "^1.4.1",
-    "ramda": "^0.17.1",
-    "track-module": "file:lib/track-module"
+    "ramda": "^0.17.1"
   },
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
     "should": "^7.1.0"
   }
 }

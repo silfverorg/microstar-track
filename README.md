@@ -7,6 +7,7 @@ Currently uses an internal database. This can and perhaps should moved later on.
 
 ```js
 npm install
+npm run build
 ```
 
 ## Test

@@ -1,0 +1,26 @@
+{
+  "name": "microstar-track",
+  "version": "0.0.1",
+  "description": "Track library for microstar.",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npm run build",
+    "build": "rm -rf lib && babel src --out-dir lib",
+    "setup": "find src/ -maxdepth 1 | tail -n +2 | npm link",
+
+    "test": "mocha --compilers js:babel/register",
+    "testwatch": "mocha --compilers js:babel/register --watch"
+  },
+  "author": "Viktor Silfverström",
+  "license": "MIT",
+  "dependencies": {
+    "database-module": "file:lib/database-module",
+    "q": "^1.4.1",
+    "ramda": "^0.17.1",
+    "track-module": "file:lib/track-module"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "should": "^7.1.0"
+  }
+}

@@ -4,7 +4,6 @@
   "description": "Track library for microstar.",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npm run build",
     "build": "webpack",
     "test": "mocha --compilers js:babel/register",
     "testwatch": "npm run test -- --watch"

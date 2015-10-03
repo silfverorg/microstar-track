@@ -2,15 +2,10 @@ import R from 'ramda';
 import Q from 'q';
 import DatabaseModule from '../database-module/database-library';
 
-const config = {
-    host: 'localhost',
-    port: 32775,
-};
-
 class TrackLibrary {
     constructor(config) {
-      this.config = config;
-      this.database = new DatabaseModule(config);
+      this._config = config;
+      this._database = new DatabaseModule(config);
     }
 
     track(event, data) {
@@ -20,7 +15,7 @@ class TrackLibrary {
                     status: 400,
                 })
             } else {
-                this.database.createEntry({
+                this._database.createEntry({
                     event,
                     data
                 })

@@ -48,17 +48,49 @@ module.exports =
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
-	  value: true
+	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var _trackModuleTrackLibraryJs = __webpack_require__(1);
 
 	var _trackModuleTrackLibraryJs2 = _interopRequireDefault(_trackModuleTrackLibraryJs);
 
-	exports['default'] = _trackModuleTrackLibraryJs2['default'];
-	module.exports = exports['default'];
+	var _fetchModuleFetchLibraryJs = __webpack_require__(53);
+
+	var _fetchModuleFetchLibraryJs2 = _interopRequireDefault(_fetchModuleFetchLibraryJs);
+
+	exports.FetchModule = _fetchModuleFetchLibraryJs2['default'];
+	exports.TrackModule = _trackModuleTrackLibraryJs2['default'];
+
+	var Microstar = (function () {
+	    function Microstar(config) {
+	        _classCallCheck(this, Microstar);
+
+	        this._config = config;
+	    }
+
+	    _createClass(Microstar, [{
+	        key: 'trackModule',
+	        value: function trackModule() {
+	            return new _trackModuleTrackLibraryJs2['default'](this._config);
+	        }
+	    }, {
+	        key: 'fetchModule',
+	        value: function fetchModule() {
+	            return new _fetchModuleFetchLibraryJs2['default'](this._config);
+	        }
+	    }]);
+
+	    return Microstar;
+	})();
+
+	exports['default'] = Microstar;
 
 /***/ },
 /* 1 */
@@ -88,17 +120,12 @@ module.exports =
 
 	var _databaseModuleDatabaseLibrary2 = _interopRequireDefault(_databaseModuleDatabaseLibrary);
 
-	var config = {
-	    host: 'localhost',
-	    port: 32775
-	};
-
 	var TrackLibrary = (function () {
 	    function TrackLibrary(config) {
 	        _classCallCheck(this, TrackLibrary);
 
-	        this.config = config;
-	        this.database = new _databaseModuleDatabaseLibrary2['default'](config);
+	        this._config = config;
+	        this._database = new _databaseModuleDatabaseLibrary2['default'](config);
 	    }
 
 	    _createClass(TrackLibrary, [{
@@ -112,7 +139,7 @@ module.exports =
 	                        status: 400
 	                    });
 	                } else {
-	                    _this.database.createEntry({
+	                    _this._database.createEntry({
 	                        event: event,
 	                        data: data
 	                    }).then(function (res) {
@@ -9700,6 +9727,13 @@ module.exports =
 
 	var _rethinkdb2 = _interopRequireDefault(_rethinkdb);
 
+	var defaultHandlerForRunCallback = function defaultHandlerForRunCallback(defer) {
+	    return function (err, result) {
+	        if (err) return defer.reject(err);
+	        defer.resolve(result);
+	    };
+	};
+
 	var databaseLibrary = (function () {
 	    function databaseLibrary(config) {
 	        _classCallCheck(this, databaseLibrary);
@@ -9729,12 +9763,21 @@ module.exports =
 	            var defer = _q2['default'].defer();
 
 	            this._getConnection().then(function (conn) {
-	                _rethinkdb2['default'].db('microstar').table('events').insert([payload]).run(conn, function (err, result) {
-	                    if (err) return defer.reject(err);
-	                    defer.resolve(result);
-	                });
+	                _rethinkdb2['default'].db('microstar').table('events').insert([payload]).run(conn, defaultHandlerForRunCallback(defer));
 	            });
 
+	            return defer.promise;
+	        }
+	    }, {
+	        key: 'getAll',
+	        value: function getAll() {
+	            var defer = _q2['default'].defer();
+	            this._getConnection().then(function (conn) {
+	                _rethinkdb2['default'].db('microstar').table('events').run(conn, function (err, cursor) {
+	                    if (err) return defer.reject(err);
+	                    cursor.toArray(defaultHandlerForRunCallback(defer));
+	                });
+	            });
 	            return defer.promise;
 	        }
 	    }]);
@@ -21860,6 +21903,47 @@ module.exports =
 
 	module.exports = rethinkdb;
 
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _databaseModuleDatabaseLibrary = __webpack_require__(4);
+
+	var _databaseModuleDatabaseLibrary2 = _interopRequireDefault(_databaseModuleDatabaseLibrary);
+
+	var FetchLibrary = (function () {
+	    function FetchLibrary(config) {
+	        _classCallCheck(this, FetchLibrary);
+
+	        this._config = config;
+	        this._database = new _databaseModuleDatabaseLibrary2['default'](config);
+	    }
+
+	    _createClass(FetchLibrary, [{
+	        key: 'getAll',
+	        value: function getAll() {
+	            return this._database.getAll();
+	        }
+	    }]);
+
+	    return FetchLibrary;
+	})();
+
+	exports['default'] = FetchLibrary;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

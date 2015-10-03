@@ -1,6 +1,13 @@
 import Q from 'q';
 import r from 'rethinkdb';
 
+const defaultHandlerForRunCallback = (defer) => {
+    return (err, result) => {
+        if (err) return defer.reject(err);
+        defer.resolve(result);
+    };
+};
+
 class databaseLibrary {
     constructor(config) {
         this.connection = null;
@@ -28,12 +35,22 @@ class databaseLibrary {
                     .insert([
                         payload
                     ])
-                    .run(conn, (err, result) => {
-                        if (err) return defer.reject(err);
-                        defer.resolve(result);
-                    });
+                    .run(conn, defaultHandlerForRunCallback(defer));
             });
 
+        return defer.promise;
+    }
+
+    getAll() {
+        const defer = Q.defer();
+        this._getConnection()
+            .then((conn) => {
+                r.db('microstar').table('events')
+                    .run(conn, (err, cursor) => {
+                        if (err) return defer.reject(err);
+                        cursor.toArray(defaultHandlerForRunCallback(defer));
+                    });
+            });
         return defer.promise;
     }
 }

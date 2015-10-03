@@ -5,15 +5,8 @@ export {FetchModule, TrackModule};
 
 class Microstar {
     constructor(config) {
-        this._config = config;
-    }
-
-    trackModule() {
-        return new TrackModule(this._config);
-    }
-
-    fetchModule() {
-        return new FetchModule(this._config);
+        this.trackModule = new TrackModule(config);
+        this.fetchModule = new FetchModule(config);
     }
 }
 

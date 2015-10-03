@@ -1,8 +1,8 @@
-import MicrostarTrack from '../index.js';
+import MicrostarTrack from '../src/index.js';
 import should from 'should';
 import config from './config.js';
 
-const microstarTrack = new MicrostarTrack(config).trackModule();
+const microstarTrack = new MicrostarTrack(config).trackModule;
 
 describe('Track library Suite', () => {
 

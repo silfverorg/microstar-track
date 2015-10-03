@@ -5,6 +5,9 @@ Currently uses an internal database. This can and perhaps should moved later on.
 
 This package should change name if it handles both tracking and fetching. (Originally only handled tracking).
 
+## Docs
+[Usage](./docs/usage.md)
+
 ## Install
 
 ```js

@@ -24,7 +24,7 @@ class TrackLibrary {
      */
     track(event_name, event_data, $_vars = {}) {
         return Q.Promise((resolve, reject) => {
-            if (!event) {
+            if (!event_name) {
                 resolve({
                     status: 400,
                 })

@@ -8,17 +8,35 @@ class TrackLibrary {
       this._database = new DatabaseModule(config);
     }
 
-    track(event, data) {
+    /**
+     * Track an event.
+     *
+     * @name track
+     * @function
+     * @author Viktor Silfverstrom <viktor@silfverstrom.com>
+     * @version 0.1.0
+     * @since 0.0.1
+     * @access public
+     * @param {String} event The event name
+     * @param {Object} data The object the user sends with the event.
+     * @param {Object = {}} $_vars All the variable objects.
+     * @return {Object} 
+     */
+    track(event, data, $_vars = {}) {
         return Q.Promise((resolve, reject) => {
             if (!event) {
                 resolve({
                     status: 400,
                 })
             } else {
-                this._database.createEntry({
+                const $_event_date = +(new Date());
+                const obj = Object.assign($_vars, {
                     event,
-                    data
-                })
+                    data,
+                    $_event_date
+                });
+                
+                this._database.createEntry(obj)
                     .then((res) => {
                             resolve({
                                 status: 200,

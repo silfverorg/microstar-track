@@ -17,12 +17,12 @@ class TrackLibrary {
      * @version 0.1.0
      * @since 0.0.1
      * @access public
-     * @param {String} event The event name
-     * @param {Object} data The object the user sends with the event.
+     * @param {String} event_name The event name
+     * @param {Object} event_data The object the user sends with the event.
      * @param {Object = {}} $_vars All the variable objects.
      * @return {Object} 
      */
-    track(event, data, $_vars = {}) {
+    track(event_name, event_data, $_vars = {}) {
         return Q.Promise((resolve, reject) => {
             if (!event) {
                 resolve({
@@ -31,8 +31,8 @@ class TrackLibrary {
             } else {
                 const $_event_date = +(new Date());
                 const obj = Object.assign($_vars, {
-                    event,
-                    data,
+                    event_name,
+                    event_data,
                     $_event_date
                 });
                 

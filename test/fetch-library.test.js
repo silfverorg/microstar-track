@@ -13,7 +13,7 @@ describe('Fetch library', () => {
                 data.should.be.an.array;
                 data.length.should.be.above(0);
                 data.forEach((val) => {
-                    val.should.have.properties(['id', 'data', 'event']);
+                    val.should.have.properties(['id', 'event_data', 'event_name']);
                 })
                 done();
             })

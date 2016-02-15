@@ -4,3 +4,4 @@ lib
 *.tern-port
 *.swp
 index.js
+npm-debug.log

@@ -6,8 +6,8 @@ class FetchLibrary {
         this._database = new DatabaseLibrary(config);
     }
 
-    getAll() {
-        return this._database.getAll();
+    getAll(payload) {
+        return this._database.getAll(payload);
     }
 }
 

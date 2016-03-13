@@ -41,17 +41,21 @@ class databaseLibrary {
         return defer.promise;
     }
 
-    getAll() {
-        const defer = Q.defer();
-        this._getConnection()
-            .then((conn) => {
-                r.db('microstar').table('events')
-                    .run(conn, (err, cursor) => {
-                        if (err) return defer.reject(err);
-                        cursor.toArray(defaultHandlerForRunCallback(defer));
-                    });
+    getAll(payload={}) {
+      const defer = Q.defer();
+      this._getConnection()
+        .then((conn) => {
+            let query = r.db('microstar').table('events')
+            if (payload.limit) {
+              query = query.limit(payload.limit);
+            }
+
+           query.run(conn, (err, cursor) => {
+              if (err) return defer.reject(err);
+              cursor.toArray(defaultHandlerForRunCallback(defer));
             });
-        return defer.promise;
+        });
+      return defer.promise;
     }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "microstar-track",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "Track library for microstar.",
   "main": "index.js",
   "scripts": {

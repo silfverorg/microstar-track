@@ -10,4 +10,4 @@ class FetchLibrary {
   }
 }
 
-module.exports =  FetchLibrary;
+module.exports = FetchLibrary;

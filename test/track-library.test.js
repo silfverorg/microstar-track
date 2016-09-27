@@ -7,7 +7,7 @@ const microstarTrack = new MicrostarTrack(config).trackModule;
 describe('Track library Suite', () => {
 
   it('Can track a new entry', (done) => {
-    microstarTrack.track('My event', {id: 1})
+    microstarTrack.track('My event', {id: 1}, {})
     .then((res) => {
       try {
         res.should.have.property('status', 200);
@@ -15,7 +15,8 @@ describe('Track library Suite', () => {
       } catch (err) {
         done(err);
       }
-    });
+    })
+    .catch(done)
   });
 
     it('Will send correct error status for invalid arguments', (done) => {
@@ -28,6 +29,7 @@ describe('Track library Suite', () => {
               done(err);
             }
         })
+        .catch(done)
     });
 
 });

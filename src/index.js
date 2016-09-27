@@ -8,6 +8,4 @@ class Microstar {
   }
 }
 
-exports.FetchModule = FetchModule;
-exports.TrackModule = TrackModule;
 module.exports = Microstar;

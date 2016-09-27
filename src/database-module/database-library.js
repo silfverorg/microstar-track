@@ -2,7 +2,6 @@ const MongoClient = require('mongodb').MongoClient;
 
 class databaseLibrary {
   constructor(config) {
-    this.connection = null;
     this.config = config;
   }
 
@@ -12,6 +11,7 @@ class databaseLibrary {
         if (err) return reject(err);
         const collection = db.collection('events');
         collection.insert(payload, (err, res) => {
+          db.close();
           if (err) return reject(err);
           resolve();
         });
@@ -30,6 +30,7 @@ class databaseLibrary {
         }
 
         q.toArray((err, docs) => {
+          db.close();
           if (err) return reject(err);
           resolve(docs);
         });

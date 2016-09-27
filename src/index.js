@@ -1,7 +1,5 @@
-import TrackModule from './track-module/track-library.js';
-import FetchModule from './fetch-module/fetch-library.js';
-
-export {FetchModule, TrackModule};
+const TrackModule = require('./track-module/track-library.js');
+const FetchModule = require('./fetch-module/fetch-library.js');
 
 class Microstar {
     constructor(config) {
@@ -10,4 +8,6 @@ class Microstar {
     }
 }
 
-export default Microstar;
+exports.FetchModule = FetchModule;
+exports.TrackModule = TrackModule;
+module.exports = Microstar;

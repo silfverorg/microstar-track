@@ -1,5 +1,5 @@
-import Q from 'q';
-import r from 'rethinkdb';
+const Q = require('q');
+const r = require('rethinkdb');
 
 const defaultHandlerForRunCallback = (defer) => {
     return (err, result) => {
@@ -59,4 +59,4 @@ class databaseLibrary {
     }
 }
 
-export default databaseLibrary;
+module.exports = databaseLibrary;

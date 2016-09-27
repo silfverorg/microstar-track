@@ -1,6 +1,6 @@
-import R from 'ramda';
-import Q from 'q';
-import DatabaseModule from '../database-module/database-library';
+const R = require('ramda');
+const Q = require('q');
+const DatabaseModule = require('../database-module/database-library');
 
 class TrackLibrary {
     constructor(config) {
@@ -53,4 +53,4 @@ class TrackLibrary {
     }
 }
 
-export default TrackLibrary;
+module.exports = TrackLibrary;

@@ -1,6 +1,6 @@
-import should from 'should';
-import FetchModule from '../src/fetch-module/fetch-library.js';
-import config from './config.js';
+const should = require('should');
+const FetchModule = require('../src/fetch-module/fetch-library.js');
+const config  = require('./config.js');
 
 const fetchModule = new FetchModule(config);
 

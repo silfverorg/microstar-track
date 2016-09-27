@@ -1,4 +1,4 @@
-import DatabaseLibrary from '../database-module/database-library';
+const DatabaseLibrary = require('../database-module/database-library');
 
 class FetchLibrary {
     constructor(config) {
@@ -11,4 +11,4 @@ class FetchLibrary {
     }
 }
 
-export default FetchLibrary;
+module.exports =  FetchLibrary;

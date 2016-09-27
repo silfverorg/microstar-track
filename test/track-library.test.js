@@ -1,6 +1,6 @@
-import MicrostarTrack from '../src/index.js';
-import should from 'should';
-import config from './config.js';
+const MicrostarTrack = require('../src/index.js');
+const should = require('should');
+const config = require('./config.js');
 
 const microstarTrack = new MicrostarTrack(config).trackModule;
 

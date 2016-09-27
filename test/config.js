@@ -1,4 +1,3 @@
 module.exports = {
-    host: 'localhost',
-    port: 32772
+  dburl: 'mongodb://192.168.99.102:27017'
 };

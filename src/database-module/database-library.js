@@ -1,62 +1,41 @@
-const Q = require('q');
-const r = require('rethinkdb');
-
-const defaultHandlerForRunCallback = (defer) => {
-    return (err, result) => {
-        if (err) return defer.reject(err);
-        defer.resolve(result);
-    };
-};
+const MongoClient = require('mongodb').MongoClient;
 
 class databaseLibrary {
-    constructor(config) {
-        this.connection = null;
-        this.config = config;
-    }
+  constructor(config) {
+    this.connection = null;
+    this.config = config;
+  }
 
-    _getConnection() {
-        return Q.Promise((resolve, reject) => {
-            if (this.connection) return resolve(this.connection);
-
-            r.connect(this.config, (err, conn) => {
-                if (err) return reject(err);
-                this.connection = conn;
-                resolve(this.connection);
-            });
+  createEntry(payload) {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(this.config.dburl, (err, db) => {
+        if (err) return reject(err);
+        const collection = db.collection('events');
+        collection.insert(payload, (err, res) => {
+          if (err) return reject(err);
+          resolve();
         });
-    }
+      });
+    });
+  }
 
-    createEntry(payload) {
-        const defer = Q.defer();
+  getAll(payload={}) {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(this.config.dburl, (err, db) => {
+        if (err) return reject(err);
+        const collection = db.collection('events');
+        var q = collection.find({});
+        if (payload.limit) {
+          q = q.limit(payload.limit);
+        }
 
-        this._getConnection()
-            .then((conn) => {
-                r.db('microstar').table('events')
-                    .insert([
-                        payload
-                    ])
-                    .run(conn, defaultHandlerForRunCallback(defer));
-            });
-
-        return defer.promise;
-    }
-
-    getAll(payload={}) {
-      const defer = Q.defer();
-      this._getConnection()
-        .then((conn) => {
-            let query = r.db('microstar').table('events')
-            if (payload.limit) {
-              query = query.limit(payload.limit);
-            }
-
-           query.run(conn, (err, cursor) => {
-              if (err) return defer.reject(err);
-              cursor.toArray(defaultHandlerForRunCallback(defer));
-            });
+        q.toArray((err, docs) => {
+          if (err) return reject(err);
+          resolve(docs);
         });
-      return defer.promise;
-    }
+      });
+    });
+  }
 }
 
 module.exports = databaseLibrary;

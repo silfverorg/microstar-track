@@ -10,7 +10,7 @@
   "author": "Viktor Silfverström",
   "license": "MIT",
   "dependencies": {
-    "mongodb": "^2.2.10"
+    "mongodb": "^1.4.40"
   },
   "devDependencies": {
     "mocha": "^3.1.0",
